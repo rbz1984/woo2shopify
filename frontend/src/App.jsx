@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Store, ShoppingBag, Key, Lock, Zap, Server, AlertCircle } from 'lucide-react';
 import './index.css';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+const API_BASE_URL = (import.meta.env.VITE_API_URL || 'http://localhost:3000').replace(/\/$/, '');
 
 function App() {
   const [formData, setFormData] = useState({
