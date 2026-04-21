@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Store, ShoppingBag, Key, Lock, Zap, Server, AlertCircle } from 'lucide-react';
 import './index.css';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
 function App() {
   const [formData, setFormData] = useState({
     wooUrl: '',
@@ -33,7 +35,7 @@ function App() {
     setMigrationId(null);
 
     try {
-      const response = await axios.post('http://localhost:3000/start-migration', formData);
+      const response = await axios.post(`${API_BASE_URL}/start-migration`, formData);
       setMigrationId(response.data.migrationId);
     } catch (err) {
       setErrorMsg(err.response?.data?.error || err.message || 'Failed to start migration.');
@@ -46,7 +48,7 @@ function App() {
     if (migrationId && migrationId !== 'demo-local') {
       interval = setInterval(async () => {
         try {
-          const res = await axios.get(`http://localhost:3000/migration-status/${migrationId}`);
+          const res = await axios.get(`${API_BASE_URL}/migration-status/${migrationId}`);
           setProgress(res.data);
           
           if (res.data.status === 'completed' || res.data.status === 'failed') {
